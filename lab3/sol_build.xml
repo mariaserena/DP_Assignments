@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="service-and-clients-build" basedir=".">
+<description>
+	an ant build file for automating the building of the NfvDeployer service, client1 and client2
+</description>
+	<!-- parckages -->
+	<property name="base.package" value="it.polito.dp2.NFV.sol3" />
+	<property name="service.package" value="${base.package}.service" />
+	<property name="client1.package" value="${base.package}.client1" />
+	<property name="client2.package" value="${base.package}.client2" />
+	<property name="neo4j.package" value="${service.package}.neo4j" />
+	
+	<!-- paths-->
+	<property name="base.path" value="it/polito/dp2/NFV/sol3" />
+	<property name="service.path" value="${base.path}/service" />	
+	<property name="client1.path" value="${base.path}/client1" />	
+	<property name="client2.path" value="${base.path}/client2" />
+	<property name="neo4j.path" value="${service.path}/neo4j"/>
+	
+	
+	<property name="NFVWADL" value="${URL}/application.wadl"/>
+	<property name="client1.art.dir" value="${custom.dir}/${client1.path}"/>
+	<property name="client1.art.dir" value="${custom.dir}/${client2.path}"/>
+	<property name="server.art.dir" value="${custom.dir}/${neo4j.path}"></property>
+	
+	<!-- The classpath to be used for compilation of the server -->
+	<path id="server.classpath">
+			<fileset dir="${lib.dir}">
+			    <include name="*.jar" />
+				<!-- exclude the libraries necessary only for testing-->
+				<exclude name="lab1.jar"/>
+				<exclude name="NFVRandom.jar"/> 
+			</fileset>
+			<fileset dir="${ext.lib.dir}">
+			    <include name="*.jar" />
+			</fileset>
+		</path>
+	
+	
+	<!-- The classpath to be used for compilation of the clients -->
+			<path id="client.classpath">
+				<fileset dir="${lib.dir}">
+						<include name="*.jar" />
+						<!-- exclude the libraries necessary only for testing-->
+						<exclude name="lab1.jar"/>
+				</fileset>
+				<fileset dir="${ext.lib.dir}">
+						<include name="*.jar" />
+				</fileset>
+		</path>
+	
+	<!-- Clean generated classes -->
+	<target name="clean" description="Clean generated client files">
+		<delete dir="${custom.dir}/it" />
+	</target>
+	
+
+	
+	<!-- this target is invoked by the package-service target available in build.xml -->
+		<target name="build-service" depends="generate-server-bindings, generate-neo4j-artifacts" description="build the server">
+				<echo>Building the submitted solution (if needed)...</echo>
+				<javac destdir="${build.dir}" debug="${debug}" debuglevel="${debuglevel}" source="${source}" target="${target}" includeantruntime="false">
+					<src path="${src.dir}"/>
+					<src path="${custom.dir}"/>
+					<include name="${service.path}/**"/>
+					<include name="${neo4j.path}/**"/>
+					<classpath>
+						<path refid="server.classpath" />
+					</classpath>
+				</javac>
+				<echo>Done.</echo>
+		</target>
+	
+	<!--this target when invoked must generate the source code of the classes in the [basedir]/build folder for the server-->
+	<target name="generate-server-bindings" description="Generate bindings from schema">
+		<exec executable="xjc" failonerror="true" >
+			<arg value="-d" />
+			<arg value="${custom.dir}" />
+			<arg value="-p" />
+			<arg value="${service.package}" />
+			<arg value="${xsd.dir}/NfvDeployer.xsd" />
+		</exec>
+	</target>
+	
+	
+	<taskdef name="wjc" classname="org.jvnet.ws.wadl2java.WJCTask">
+			<classpath>
+				<fileset dir="/opt/dp2/shared/lib" includes="*.jar" />
+			</classpath>
+	</taskdef>
+	<!-- define wjc task (WADL to Java) 
+	define the client artifacts generation target -->
+	<target name="generate-neo4j-artifacts">
+		<mkdir dir = "${custom.dir}"/>
+		<echo message="executing the wjc command for neo4j..."/>
+		<wjc description="${Neo4JSimpleXMLWADL}" package="${service.package}.neo4j" autoSchemaPackage="false" target="${custom.dir}">
+			<customizations dir="${basedir}" includes="binding.xjc"/>
+			<produces dir="${server.art.dir}" includes="*.java"/>
+			<depends dir="${basedir}" includes="build.xml"/>
+		</wjc>
+	</target>
+	
+
+	
+	
+	<!-- Target build-client -->
+		<target name="build-client" depends="generate-client1-artifacts, generate-client2-artifacts" description="build the client">
+			<echo>Building the submitted solution (if needed)...</echo>
+			<javac destdir="${build.dir}" debug="${debug}" debuglevel="${debuglevel}" source="${source}" target="${target}" includeantruntime="false">
+				<src path="${src.dir}"/>
+				<src path="${custom.dir}"/>
+				<include name="${client1.path}/**" />
+				<include name="${client2.path}/**" />
+					<classpath>
+						<path refid="client.classpath" />
+					</classpath>
+				</javac>
+				<echo>Done.</echo>
+			</target>
+	
+	<!-- define the client1 artifacts generation target  -->
+	<target name="generate-client1-artifacts" description="Generate client1 artifacts">
+					<exec executable="xjc" failonerror="true" >
+						<arg value="-d" />
+						<arg value="${custom.dir}" />
+						<arg value="-p" />
+						<arg value="${client1.package}" />
+						<arg value="http://localhost:${PORT}/NfvDeployer/NfvDeployer.xsd" />
+					</exec>
+				</target>
+	<target name="generate-client2-artifacts" description="Generate client2 artifacts">
+						<exec executable="xjc" failonerror="true" >
+							<arg value="-d" />
+							<arg value="${custom.dir}" />
+							<arg value="-p" />
+							<arg value="${client2.package}" />
+							<arg value="http://localhost:${PORT}/NfvDeployer/NfvDeployer.xsd" />
+						</exec>
+					</target>
+						
+	<!--
+	<target name="generate-client1-artifacts" description="Generate client1 artifacts">
+							<mkdir dir="${custom.dir}" />
+							<echo message="Compiling the NfVDeployer descriptions..." />
+								<wjc description="${NFVWADL}" package="${client1.package}"
+								autoSchemaPackage="false" target="${custom.dir}">
+								<customizations dir="${basedir}" includes="binding.xjc"/> 
+								<produces dir="${client1.art.dir}" includes="*.java"/>
+								<depends dir="${basedir}" includes="build.xml"/> 
+								</wjc>
+						</target>
+	<target name="generate-client2-artifacts" description="Generate client1 artifacts">
+						<mkdir dir="${custom.dir}" />
+						<echo message="Compiling the NfVDeployer descriptions..." />
+							<wjc description="${NFVWADL}" package="${client2.package}"
+							autoSchemaPackage="false" target="${custom.dir}">
+							<customizations dir="${basedir}" includes="binding.xjc"/> 
+							<produces dir="${client2.art.dir}" includes="*.java"/>
+							<depends dir="${basedir}" includes="build.xml"/> 
+							</wjc>
+					</target>
+	-->
+</project>

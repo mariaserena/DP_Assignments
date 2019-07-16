@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Nfv Deployer Web Service Design Choices</title>
+</head>
+<body>
+<h2>Nfv Deployer Web Service Design Choices</h2>
+<p>
+The NfvDeployer Web service was designed to be a REST web service. It internally uses types that are 
+defined in the xsd/NevDeployer.xsd 
+XML schema. The shared data used by the system are declared in the src/NfvDB.java file and it was decided 
+to use ConcurrentHashMaps to optimize the concurrency and scale well with hundreds of Nffgs. 
+Private static long variables were also used to create the names of Nodes, Links and Nffgs.
+The init phase requested by the text of the assignment was realized by implementing a singleton
+pattern. In this way the init phase is called only when the first client connects to the service. 
+The NfvDeployer exploits the Neo4jSimpleXML service only when it's necessary to deploy an Nffg,
+save a node in a deployed Nffg, save a link in an already deployed Nffg or retrieve the hosts that 
+are reachable from a node present in a deployed Nffg.
+In the other cases (retrievement of the list of Nffgs, Nodes, etc.), the needed information are
+retrieved from the internal DBs (shared data) of the service without accessing the Neo4j remote DB. 
+The data submitted  by the client are validated by a customized MessageBodyReader that validates them against the
+defined schema. Further validations are also performed by each operation to ensure the consistency of the 
+internal DBs.
+</p>
+<p>
+When the creation of a new Node is requested from a client, the service checks if the 
+correspondent Nffg is deployed or not, tries to allocate the node on the host selected by the 
+client (if any) and if fails it tries to allocate the node on an available host by using the first-fit
+allocation algorithm. The information about the new node are then saved in the Neo4j DB and if the 
+operation succeeds the correspondent data are also saved in the local DBs and the hosts are updated. 
+Because the check on the host's availability and the host update take place in two different time
+instants (respectively before and after the upload of the node information on the Neo4j DB), they are 
+enclosed in a synchronized block that ensures thread-safety. 
+When the deployment of a new Nffg is requested, for each node are performed the operation described above
+and for each link (if any) are saved the needed info on the Neo4j DB and on the local DBs.
+</p>
+<p>
+Because the name of the elements that has to be added to the system is chosen internally by the system, 
+it's not possible to allocate two identical elements with the same name. The system does not perform any
+already existing element check during the deployment of an Nffg or during the addition of a Node because it 
+was not required by the text of the assignment, so to speed up the operations 
+it was assumed that two equal Nodes/Nffgs could be allocated into the system.
+As requested, instead, the already existing element check is performed when the addition of a link is requested 
+and the client sets the "overwrite" query parameter to "false". 
+In this case, the search is not performed by name (because, again, it is chosen by the system) but on the
+nodes connected by the link. If the "overwrite" query parameter to "false" and the link is already present,
+a 403 - Forbidden error is returned. Instead, if the "overwrite" query parameter to "true" and the link is 
+already present, the old link is discarded and the new link is saved with the same name of the old one.
+</p>
+<p>
+
+</p>
+</body>
+</html>

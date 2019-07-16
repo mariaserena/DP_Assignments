@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xsd>
+<nffgType xmlns="http://service.sol3.NFV.dp2.polito.it"  
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:schemaLocation="http://service.sol3.NFV.dp2.polito.it NfvDeployer.xsd" name="n">
+	<nodeType name="l1" VNFT="hsh" nffg_name="n">
+		<linkType name="l1" source_node="l1" dest_node="l3"></linkType>
+		<host>H1</host>
+	</nodeType>
+	<nodeType name="l2" VNFT="hsh" nffg_name="n">
+		<host>H1</host>
+	</nodeType>
+</nffgType>

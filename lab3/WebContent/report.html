@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Nfv Deployer Web Service Description</title>
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+</style>
+</head>
+<body>
+<h2>Resource description</h2>
+<b>Base URL of the service: </b>http://localhost:8080/NfvDeployer/rest/resources
+<p>
+<table style="width:100%">
+  <tr>
+    <th>Url</th>
+    <th>XML representation</th> 
+    <th>Meaning</th>
+  </tr>
+  <tr>
+    <td>nffgs</td>
+    <td>NffgsType</td> 
+    <td>Set of all the nffgs</td>
+  </tr>
+  <tr>
+    <td>nffgs/{nffg_id}</td>
+    <td>NffgType</td> 
+    <td>Single nffg</td>
+  </tr>
+  <tr>
+  	<td>nffgs/{nffg_id}/nodes</td>
+  	<td>NodesType</td>
+  	<td>Set of all the nodes</td>
+  </tr>
+   <tr>
+  	<td>nffgs/{nffg_id}/nodes/{node_id}</td>
+  	<td>NodeType</td>
+  	<td>Single node</td>
+  </tr>
+   <tr>
+  	<td>nffgs/{nffg_id}/nodes/{node_id}/links</td>
+  	<td>LinksType</td>
+  	<td>Set of all the links</td>
+  </tr>
+   <tr>
+  	<td>nffgs/{nffg_id}/nodes/{node_id}/reachable_hosts</td>
+  	<td>ReachableHostType</td>
+  	<td>Set of all the hosts reachable from this node </td>
+  </tr>
+   <tr>
+  	<td>vnfts</td>
+  	<td>VnftsType</td>
+  	<td>Set of all the vntfs</td>
+  </tr>
+  <tr>
+  	<td>vnfts/{vntf_id}</td>
+  	<td>VnftsType</td>
+  	<td>Single vnft</td>
+  </tr>
+  <tr>
+  	<td>hosts</td>
+  	<td>HostsType</td>
+  	<td>Set of all the hosts</td>
+  </tr>
+  <tr>
+  	<td>hosts/{host_id}</td>
+  	<td>HostType</td>
+  	<td>Signle host</td>
+  </tr>
+  <tr>
+  	<td>performances</td>
+  	<td>PerformancesType</td>
+  	<td>Set of all the performances</td>
+  </tr>
+</table>
+</p>
+
+<p>
+<h2>Operations description</h2>
+<table style="width:100%">
+	<tr>
+		<th>Resource</th>
+		<th>Method</th>
+		<th>Request body</th>
+		<th>Query parameters</th>
+		<th>Response body</th>
+		<th>Status</th>
+		<th>Meaning</th>
+	</tr>
+
+	<tr>
+  	<td rowspan="2">nffgs</td>
+  	<td rowspan="2">GET</td>
+  	<td rowspan="2"></td>
+  	<td rowspan="2"></td>
+  	<td>nffgsType</td>
+  	<td>200</td>
+  	<td>OK</td>
+  </tr>
+  	<td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  <tr>
+  </tr>
+  
+  <tr>
+  	<td rowspan="5">nffgs</td>
+  	<td rowspan="5">POST</td>
+  	<td rowspan="5">NffgType</td>
+  	<td rowspan="5"></td>
+  	<td>NffgType</td>
+  	<td>201</td>
+  	<td>Created</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>403</td>
+  	<td>Forbidden - unable to allocate all the nodes/links on the nffg</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>400</td>
+  	<td>Bad Request - invalid data</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>503</td>
+  	<td>Unavailable Neo4j service</td>
+  </tr>
+  
+  <tr>
+  	<td rowspan="3">nffgs/{nffg_id}</td>
+  	<td rowspan="3">GET</td>
+  	<td rowspan="3"></td>
+  	<td rowspan="3"></td>
+  	<td>NffgType</td>
+  	<td>200</td>
+  	<td>OK</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>404</td>
+  	<td>Not Found</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  </tr>
+  
+    <tr>
+  	<td rowspan="5">nffgs/{nffg_id}</td>
+  	<td rowspan="5">DELETE</td>
+  	<td rowspan="5"></td>
+  	<td rowspan="5"></td>
+  	<td></td>
+  	<td>204</td>
+  	<td>Deleted</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>403</td>
+  	<td>Forbidden - unable to allocate all the nodes/links on the nffg</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>404</td>
+  	<td>Not Found - wrong nffg name</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>503</td>
+  	<td>Unavailable Neo4j service</td>
+  </tr>
+  
+    <tr>
+  	<td rowspan="3">nffgs/{nffg_id}/nodes</td>
+  	<td rowspan="3">GET</td>
+  	<td rowspan="3"></td>
+  	<td rowspan="3"></td>
+  	<td>NodesType</td>
+  	<td>200</td>
+  	<td>OK</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>404</td>
+  	<td>Not Found</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  </tr>
+  
+  
+    <tr>
+  	<td rowspan="6">nffgs/{nffg_id}/nodes</td>
+  	<td rowspan="6">POST</td>
+  	<td rowspan="6">NodeType</td>
+  	<td rowspan="6"></td>
+  	<td>NodeType</td>
+  	<td>201</td>
+  	<td>Created</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>403</td>
+  	<td>Forbidden - unable to allocate the node on a host</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>400</td>
+  	<td>Bad Request - invalid data</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>404</td>
+  	<td>Not Found - invalid nffg name</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>503</td>
+  	<td>Unavailable Neo4j service</td>
+  </tr>
+  
+   <tr>
+  	<td rowspan="3">nffgs/{nffg_id}/nodes/{node_id}</td>
+  	<td rowspan="3">GET</td>
+  	<td rowspan="3"></td>
+  	<td rowspan="3"></td>
+  	<td>NodeType</td>
+  	<td>200</td>
+  	<td>OK</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>404</td>
+  	<td>Not Found</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  </tr>
+  
+  <tr>
+  	<td rowspan="5">nffgs/{nffg_id}/nodes/{node_id}</td>
+  	<td rowspan="5">DELETE</td>
+  	<td rowspan="5"></td>
+  	<td rowspan="5"></td>
+  	<td></td>
+  	<td>204</td>
+  	<td>Deleted</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>403</td>
+  	<td>Forbidden - the node has still outgoing or incoming links, cannot be deleted</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>404</td>
+  	<td>Not Found - wrong nffg name</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>503</td>
+  	<td>Unavailable Neo4j service</td>
+  </tr>
+  
+     <tr>
+  	<td rowspan="3">nffgs/{nffg_id}/nodes/{node_id}/reachable_hosts</td>
+  	<td rowspan="3">GET</td>
+  	<td rowspan="3"></td>
+  	<td rowspan="3"></td>
+  	<td>HostType</td>
+  	<td>200</td>
+  	<td>OK</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>404</td>
+  	<td>Not Found - invalid nffg_id or node_id</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  </tr>
+  
+       <tr>
+  	<td rowspan="3">nffgs/{nffg_id}/nodes/{node_id}/links</td>
+  	<td rowspan="3">GET</td>
+  	<td rowspan="3"></td>
+  	<td rowspan="3"></td>
+  	<td>LinksType</td>
+  	<td>200</td>
+  	<td>OK</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>404</td>
+  	<td>Not Found - invalid nffg_id or node_id</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  </tr>
+
+<tr>
+  	<td rowspan="6">nffgs/{nffg_id}/nodes/{node_id}/links</td>
+  	<td rowspan="6">POST</td>
+  	<td rowspan="6">LinkType</td>
+  	<td rowspan="6">overwrite: Boolean</td>
+  	<td>LinkType</td>
+  	<td>201</td>
+  	<td>Created</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>403</td>
+  	<td>Forbidden - already existing link, cannot be overwritten</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>404</td>
+  	<td>Not Found - invalid nffg_id or node_id</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>400</td>
+  	<td>Bad Request - invalid data</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>503</td>
+  	<td>Unavailable Neo4j service</td>
+  </tr>
+  
+  <tr>
+  	<td rowspan="4">nffgs/{nffg_id}/nodes/{node_id}/links/{link_id}</td>
+  	<td rowspan="4">DELETE</td>
+  	<td rowspan="4"></td>
+  	<td rowspan="4"></td>
+  	<td></td>
+  	<td>204</td>
+  	<td>Deleted</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>404</td>
+  	<td>Not Found - wrong nffg name</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  </tr>
+  <tr>
+  <td></td>
+  	<td>503</td>
+  	<td>Unavailable Neo4j service</td>
+  </tr>
+  
+  <tr>
+  	<td rowspan="2">hosts</td>
+  	<td rowspan="2">GET</td>
+  	<td rowspan="2"></td>
+  	<td rowspan="2"></td>
+  	<td>HostsType</td>
+  	<td>200</td>
+  	<td>OK</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  </tr>
+  
+  <tr>
+  	<td rowspan="3">hosts/{host_id}</td>
+  	<td rowspan="3">GET</td>
+  	<td rowspan="3"></td>
+  	<td rowspan="3"></td>
+  	<td>HostType</td>
+  	<td>200</td>
+  	<td>OK</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>400</td>
+  	<td>Not Found - invalid host_id</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  </tr>
+  
+  <tr>
+  	<td rowspan="3">performances</td>
+  	<td rowspan="3">GET</td>
+  	<td rowspan="3"></td>
+  	<td rowspan="3"></td>
+  	<td>PerformanceType</td>
+  	<td>200</td>
+  	<td>OK</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>400</td>
+  	<td>Not Found - invalid perf_id</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  </tr>
+  
+   <tr>
+  	<td rowspan="2">vnfts</td>
+  	<td rowspan="2">GET</td>
+  	<td rowspan="2"></td>
+  	<td rowspan="2"></td>
+  	<td>VnftsType</td>
+  	<td>200</td>
+  	<td>OK</td>
+  </tr>
+  <tr>
+  	<td></td>
+  	<td>500</td>
+  	<td>Internal Server Error</td>
+  </tr>
+  
+</p>
+
+</body>
+</html>
