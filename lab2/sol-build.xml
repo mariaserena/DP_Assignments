@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project basedir="." default="generate-artifacts" name="NFV-SOL2">
+	<description>
+			Script for NFV Assignment 2 solution
+	</description>
+	
+	<property name="root" location="."></property>
+	
+	<!--this target when invoked must generate the source code of the classes in the [root]/gen-src folder-->
+	<property name="gen.dir" location="${root}/gen-src" ></property>
+	<property name="src.dir" location="${root}/src"></property>
+	<property name="lib.dir" location="${root}/lib"></property>
+	<property name="ext.lib.dir" location="/opt/dp2/shared/lib"></property>
+	
+	<!-- define the location of WADL-->
+	<property name="port" value="8080"></property>
+	<property name="neo4j.name" value="Neo4JSimpleXML"></property>
+	<property name="neo4j.loc" value="webapi"></property>
+	<!-- neo4j.wadl is the url where we can find the wadl-->
+	<property name="neo4j.wadl" value="http://localhost:${port}/${neo4j.name}/${neo4j.loc}/application.wadl"></property>
+	
+	<!-- define wjc task (WADL to Java) -->
+	<taskdef name="wjc" classname="org.jvnet.ws.wadl2java.WJCTask">
+			<classpath>
+				<fileset dir="${ext.lib.dir}" includes="*.jar" />
+			</classpath>
+	</taskdef>
+	
+	<!--define the client artifacts generation target -->
+	<target name="generate-artifacts">
+		<echo message="${neo4j.wadl}"/>
+		<echo message="creating the gen-src directory.."/>
+		<mkdir dir = "${gen.dir}"/>
+		<echo message="executing the wjc command..."/>
+		<wjc description="${neo4j.wadl}" package="it.polito.dp2.NFV.sol2" autoSchemaPackage="false" target="${gen.dir}">
+			<customizations dir="${root}" includes="binding.xjc"/>
+			<produces dir="${gen.dir}/it/polito/dp2/NFV/sol2" includes="*.java"/>
+			<depends dir="${root}" includes="build.xml"/>
+		</wjc>
+	</target>
+	
+	
+	
+
+</project>
