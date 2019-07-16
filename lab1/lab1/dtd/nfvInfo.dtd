@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT dp2_nfv (catalog, nf_fg*, in)>
+<!ELEMENT catalog (VNFT*)>
+<!ELEMENT VNFT EMPTY>
+<!ATTLIST VNFT
+	name ID #REQUIRED
+	memory NMTOKEN #REQUIRED
+	disk_storage NMTOKEN #REQUIRED
+	func_type (CACHE|DPI|WEB_CLIENT|WEB_SERVER|FW|MAIL_CLIENT|MAIL_SERVER|NAT|VPN|SPAM) #REQUIRED
+>
+<!ELEMENT nf_fg (node*)>
+<!ATTLIST nf_fg
+	name ID #REQUIRED
+	deploy_time CDATA #REQUIRED
+>
+<!ELEMENT node (link*,host_ref*)>
+<!ATTLIST node
+	name ID #REQUIRED
+	VNFT IDREF #REQUIRED
+	nffg_name IDREF #REQUIRED
+>
+<!ELEMENT link EMPTY>
+<!ATTLIST link
+	name ID #REQUIRED
+	source_node IDREF #REQUIRED
+	dest_node IDREF #REQUIRED
+	min_through NMTOKEN #IMPLIED
+	max_latency NMTOKEN #IMPLIED
+>
+
+<!ELEMENT host_ref (#PCDATA)>
+<!ELEMENT in (host*, connection*)>
+<!ELEMENT host (node_ref*)>
+<!ATTLIST host
+	name ID #REQUIRED
+	max_vnf NMTOKEN #REQUIRED
+	memory NMTOKEN #REQUIRED
+	disk_storage NMTOKEN #REQUIRED
+>
+<!ELEMENT node_ref (#PCDATA)>
+<!ELEMENT connection EMPTY>
+<!ATTLIST connection
+	host1 IDREF #REQUIRED
+	host2 IDREF #REQUIRED
+	avg_through NMTOKEN #REQUIRED
+	avg_latency NMTOKEN #REQUIRED
+>
+

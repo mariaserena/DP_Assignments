@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dp2_nfv xmlns="http://NFV.dp2.polito.it">
+    <catalog>
+        <VNFT name="MAILCLIENTt" memory="4" disk_storage="580" func_type="MAIL_CLIENT"/>
+        <VNFT name="WEBCLIENTt" memory="30" disk_storage="730" func_type="WEB_CLIENT"/>
+        <VNFT name="MAILSERVERt" memory="970" disk_storage="7900" func_type="MAIL_SERVER"/>
+        <VNFT name="WEBSERVERt" memory="870" disk_storage="8900" func_type="WEB_SERVER"/>
+        <VNFT name="DPIa" memory="40" disk_storage="890" func_type="DPI"/>
+        <VNFT name="VPNb" memory="40" disk_storage="110" func_type="VPN"/>
+        <VNFT name="CACHEc" memory="14" disk_storage="840" func_type="CACHE"/>
+        <VNFT name="VPNd" memory="14" disk_storage="820" func_type="VPN"/>
+    </catalog>
+    <nf_fg name="Nffg0" deploy_time="2016-09-25T21:30:20.000+03:00">
+        <node name="MAILCLIENTt3Nffg0" nffg_name="Nffg0" VNFT="MAILCLIENTt">
+            <link name="Link6" source_node="MAILCLIENTt3Nffg0" dest_node="VPNb0Nffg0" min_through="0.0" max_latency="0"/>
+            <host>H3</host>
+        </node>
+        <node name="WEBCLIENTt2Nffg0" nffg_name="Nffg0" VNFT="WEBCLIENTt">
+            <link name="Link4" source_node="WEBCLIENTt2Nffg0" dest_node="VPNb0Nffg0" min_through="0.0" max_latency="0"/>
+            <host>H2</host>
+        </node>
+        <node name="WEBSERVERt0Nffg0" nffg_name="Nffg0" VNFT="WEBSERVERt">
+            <link name="Link8" source_node="WEBSERVERt0Nffg0" dest_node="VPNb0Nffg0" min_through="0.0" max_latency="0"/>
+            <host>H4</host>
+        </node>
+        <node name="VPNb0Nffg0" nffg_name="Nffg0" VNFT="VPNb">
+            <link name="Link1" source_node="VPNb0Nffg0" dest_node="MAILCLIENTt0Nffg0" min_through="0.0" max_latency="0"/>
+            <link name="Link3" source_node="VPNb0Nffg0" dest_node="WEBCLIENTt1Nffg0" min_through="0.0" max_latency="0"/>
+            <link name="Link5" source_node="VPNb0Nffg0" dest_node="WEBCLIENTt2Nffg0" min_through="0.0" max_latency="0"/>
+            <link name="Link7" source_node="VPNb0Nffg0

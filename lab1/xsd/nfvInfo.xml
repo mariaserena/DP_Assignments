@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xsd>
+<dp2_nfv
+	xmlns="http://NFV.dp2.polito.it"  
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://NFV.dp2.polito.it nfvInfo.xsd">
+	
+	<catalog>
+		<VNFT name="NAT1" memory="25" disk_storage="310" func_type="NAT"></VNFT>
+		<VNFT name="WebServer1" memory="76" disk_storage="510" func_type="WEB_SERVER"></VNFT>
+		<VNFT name="WebClient1" memory="20" disk_storage="400" func_type="WEB_CLIENT"></VNFT>
+		<VNFT name="Firewall1" memory="310" disk_storage="1900" func_type="FW"></VNFT>
+	</catalog>
+
+	
+	<nf_fg name="mynffg" deploy_time="2017-10-21T09:00:00">
+		<node name="node1" VNFT="WebClient1" nffg_name="mynffg">
+			<link name="l1" source_node="node1" dest_node="node2" min_through="0" max_latency="5"></link>
+			<host>h1</host>
+		</node>
+		<node name="node2" VNFT="NAT1" nffg_name="mynffg">
+			<link name="l2" source_node="node2" dest_node="node3" min_through="0" max_latency="5"></link>
+			<link name="l6" source_node="node2" dest_node="node1" min_through="0" max_latency="5"></link>
+			<host>h2</host>
+		</node>
+		<node name="node3" VNFT="Firewall1" nffg_name="mynffg">
+			<link name="l3" source_node="node3" dest_node="node4" min_through="0" max_latency="5"></link>
+			<link name="l5" source_node="node3" dest_node="node2" min_through="0" max_latency="5"></link>
+			<host>h3</host>		
+		</node>
+		<node name="node4"  VNFT="WebServer1" nffg_name="mynffg">
+			<link name="l4" source_node="node4" dest_node="node3" ></link>
+			<host>h4</host>
+		</node>
+		
+	</nf_fg>
+	
+	<in>
+		<host name="h2" max_vnf="1" memory="2000" disk_storage="4000">
+			<node>node2</node>
+		</host>
+		<host name="h3" max_vnf="1" memory="2000" disk_storage="4000">
+			<node>node3</node>
+		</host>
+		<host name="h4" max_vnf="1" memory="2000" disk_storage="4000">
+			<node>node4</node>
+		</host>
+		<connection host1="h1" host2="h2" avg_through="2" avg_latency="2"></connection>
+		<connection host1="h2" host2="h3" avg_through="2" avg_latency="2"></connection>
+		<connection host1="h3" host2="h4" avg_through="2" avg_latency="2"></connection>
+		<connection host1="h4" host2="h3" avg_through="2" avg_latency="2"></connection>
+		<connection host1="h3" host2="h2" avg_through="2" avg_latency="2"></connection>
+		<connection host1="h2" host2="h1" avg_through="2" avg_latency="2"></connection>
+	</in>
+
+</dp2_nfv>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dp2_nfv xmlns="http://NFV.dp2.polito.it">
+    <catalog>
+        <VNFT name="MAILCLIENTt" memory="88" disk_storage="290" func_type="MAIL_CLIENT"/>
+        <VNFT name="WEBCLIENTt" memory="24" disk_storage="750" func_type="WEB_CLIENT"/>
+        <VNFT name="MAILSERVERt" memory="530" disk_storage="6500" func_type="MAIL_SERVER"/>
+        <VNFT name="WEBSERVERt" memory="810" disk_storage="9300" func_type="WEB_SERVER"/>
+        <VNFT name="SPAMa" memory="5" disk_storage="500" func_type="SPAM"/>
+        <VNFT name="NATb" memory="86" disk_storage="840" func_type="NAT"/>
+        <VNFT name="VPNc" memory="61" disk_storage="600" func_type="VPN"/>
+    </catalog>
+    <nf_fg name="Nffg2" deploy_time="2016-09-25T19:03:20.000+03:00">
+        <node name="VPNc3Nffg2" nffg_name="Nffg2" VNFT="VPNc">
+            <link name="Link14" source_node="VPNc3Nffg2" dest_node="SPAMa2Nffg2" min_through="0.0" max_latency="0"/>
+            <link name="Link5" source_node="VPNc3Nffg2" dest_node="WEBCLIENTt2Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H3</host>
+        </node>
+        <node name="SPAMa2Nffg2" nffg_name="Nffg2" VNFT="SPAMa">
+            <link name="Link13" source_node="SPAMa2Nffg2" dest_node="WEBSERVERt2Nffg2" min_through="0.0" max_latency="0"/>
+            <link name="Link7" source_node="SPAMa2Nffg2" dest_node="WEBCLIENTt3Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H2</host>
+        </node>
+        <node name="NATb0Nffg2" nffg_name="Nffg2" VNFT="NATb">
+            <link name="Link16" source_node="NATb0Nffg2" dest_node="WEBSERVERt2Nffg2" min_through="0.0" max_latency="0"/>
+            <link name="Link1" source_node="NATb0Nffg2" dest_node="WEBCLIENTt0Nffg2" min_through="0.0" max_latency="0"/>
+            <link name="Link3" source_node="NATb0Nffg2" dest_node="MAILCLIENTt1Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H0</host>
+        </node>
+        <node name="WEBCLIENTt3Nffg2" nffg_name="Nffg2" VNFT="WEBCLIENTt">
+            <link name="Link6" source_node="WEBCLIENTt3Nffg2" dest_node="SPAMa2Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H0</host>
+        </node>
+        <node name="WEBSERVERt2Nffg2" nffg_name="Nffg2" VNFT="WEBSERVERt">
+            <link name="Link12" source_node="WEBSERVERt2Nffg2" dest_node="SPAMa2Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H0</host>
+        </node>
+        <node name="MAILCLIENTt1Nffg2" nffg_name="Nffg2" VNFT="MAILCLIENTt">
+            <link name="Link2" source_node="MAILCLIENTt1Nffg2" dest_node="NATb0Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H2</host>
+        </node>
+        <node name="SPAMa1Nffg2" nffg_name="Nffg2" VNFT="SPAMa">
+            <link name="Link11" source_node="SPAMa1Nffg2" dest_node="WEBSERVERt1Nffg2" min_through="0.0" max_latency="0"/>
+            <link name="Link15" source_node="SPAMa1Nffg2" dest_node="SPAMa2Nffg2" min_through="0.0" max_latency="0"/>
+            <link name="Link17" source_node="SPAMa1Nffg2" dest_node="WEBSERVERt2Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H1</host>
+        </node>
+        <node name="VPNc5Nffg2" nffg_name="Nffg2" VNFT="VPNc">
+            <host>H1</host>
+        </node>
+        <node name="WEBSERVERt1Nffg2" nffg_name="Nffg2" VNFT="WEBSERVERt">
+            <link name="Link10" source_node="WEBSERVERt1Nffg2" dest_node="SPAMa1Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H2</host>
+        </node>
+        <node name="WEBCLIENTt2Nffg2" nffg_name="Nffg2" VNFT="WEBCLIENTt">
+            <link name="Link4" source_node="WEBCLIENTt2Nffg2" dest_node="VPNc3Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H3</host>
+        </node>
+        <node name="NATb4Nffg2" nffg_name="Nffg2" VNFT="NATb">
+            <link name="Link9" source_node="NATb4Nffg2" dest_node="MAILSERVERt0Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H0</host>
+        </node>
+        <node name="MAILSERVERt0Nffg2" nffg_name="Nffg2" VNFT="MAILSERVERt">
+            <link name="Link8" source_node="MAILSERVERt0Nffg2

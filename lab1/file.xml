@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dp2_nfv xmlns="http://NFV.dp2.polito.it">
+    <catalog>
+        <VNFT name="MAILCLIENTt" memory="88" disk_storage="100" func_type="MAIL_CLIENT"/>
+        <VNFT name="WEBCLIENTt" memory="69" disk_storage="630" func_type="WEB_CLIENT"/>
+        <VNFT name="MAILSERVERt" memory="410" disk_storage="5600" func_type="MAIL_SERVER"/>
+        <VNFT name="WEBSERVERt" memory="40" disk_storage="8100" func_type="WEB_SERVER"/>
+        <VNFT name="VPNa" memory="89" disk_storage="260" func_type="VPN"/>
+        <VNFT name="FWb" memory="81" disk_storage="850" func_type="FW"/>
+        <VNFT name="DPIc" memory="73" disk_storage="160" func_type="DPI"/>
+        <VNFT name="NATd" memory="21" disk_storage="30" func_type="NAT"/>
+        <VNFT name="FWe" memory="94" disk_storage="90" func_type="FW"/>
+    </catalog>
+    <nf_fg name="Nffg2" deploy_time="2016-09-26T17:48:20.000+03:00">
+        <node name="MAILCLIENTt1Nffg2" nffg_name="Nffg2" VNFT="MAILCLIENTt">
+            <link name="Link2" source_node="MAILCLIENTt1Nffg2" dest_node="NATd0Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H0</host>
+        </node>
+        <node name="NATd0Nffg2" nffg_name="Nffg2" VNFT="NATd">
+            <link name="Link3" source_node="NATd0Nffg2" dest_node="MAILCLIENTt1Nffg2" min_through="0.0" max_latency="0"/>
+            <link name="Link5" source_node="NATd0Nffg2" dest_node="MAILSERVERt0Nffg2" min_through="0.0" max_latency="0"/>
+            <link name="Link7" source_node="NATd0Nffg2" dest_node="WEBSERVERt1Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H3</host>
+        </node>
+        <node name="MAILSERVERt0Nffg2" nffg_name="Nffg2" VNFT="MAILSERVERt">
+            <link name="Link4" source_node="MAILSERVERt0Nffg2" dest_node="NATd0Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H1</host>
+        </node>
+        <node name="WEBSERVERt1Nffg2" nffg_name="Nffg2" VNFT="WEBSERVERt">
+            <link name="Link6" source_node="WEBSERVERt1Nffg2" dest_node="NATd0Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H2</host>
+        </node>
+        <node name="FWb1Nffg2" nffg_name="Nffg2" VNFT="FWb">
+            <link name="Link1" source_node="FWb1Nffg2" dest_node="WEBCLIENTt0Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H4</host>
+        </node>
+        <node name="WEBCLIENTt0Nffg2" nffg_name="Nffg2" VNFT="WEBCLIENTt">
+            <link name="Link0" source_node="WEBCLIENTt0Nffg2" dest_node="FWb1Nffg2" min_through="0.0" max_latency="0"/>
+            <host>H5</host>
+        </node>
+    </nf_fg>
+    <nf_fg name="Nffg1" deploy_time="2016-09-27T09:26:20.000+03:00">
+        <node name="DPIc4Nffg1" nffg_name="Nffg1" VNFT="DPIc">
+            <link name="Link5" source_node="DPIc4Nffg1" dest_node="WEBSERVERt0Nffg1" min_through="0.0" max_latency="0"/>
+            <host>H3</host>
+        </node>
+        <node name="WEBSERVERt0Nffg1" nffg_name="Nffg1" VNFT="WEBSERVERt">
+            <link name="Link21" source_node="WEBSERVERt0Nffg1" dest_node="VPNa1Nffg1" min_through="0.0" max_latency="0"/>
+            <link name="Link4" source_node="WEBSERVERt0Nffg1" dest_node="DPIc4Nffg1" min_through="0.0" max_latency="0"/>
+            <host>H1</host>
+        </node>
+        <node name="MAILSERVERt3Nffg1" nffg_name="Nffg1" VNFT="MAILSERVERt">
+            <link name="Link10" source_node="MAILSERVERt3Nffg1" dest_node="NATd2Nffg1" min_through="0.0" max_latency="0"/>
+            <link name="Link13" source_node="MAILSERVERt3Nffg1" dest_node="VPNa1Nffg1" min_through="0.0" max_latency="0"/>
+            <host>H4</host>
+        </node>
+        <node name="MAILCLIENTt1Nffg1" nffg_name="Nffg1" VNFT="MAILCLIENTt">
+            <link name="Link2" source_node="MAILCLIENTt1Nffg1" dest_node="DPIc5Nffg1" min_through="0.0" max_latency="0"/>
+            <host>H0</host>
+        </node>
+        <node name="MAILSERVERt2Nffg1" nffg_name="Nffg1" VNFT="MAILSERVERt">
+            <link name="Link16" source_node="MAILSERVERt2Nffg1" dest_node="VPNa1Nffg1" min_through="0.0" max_latency="0"/>
+            <link name="Link19" source_node="MAILSERVERt2Nffg1" dest_node="DPIc5Nffg1" min_through="0.0" max_latency="0"/>
+            <link name="Link8" source_node="MAILSERVERt2Nffg1" dest_node="NATd2Nffg1" min_through="0.0" max_latency="0"/>
+            <host>H3</host>
+        </node>
+        <node name="NATd2Nffg1" nffg_name="Nffg1" VNFT="NATd">
+            <link name="Link11" source_node="NATd2Nffg1" dest_node="MAILSERVERt3Nffg1" min_through="0.0" max_latency="0"/>
+            <link name="Link20" source_node="NATd2Nffg1" dest_node="MAILCLIENTt1Nffg1" min_through="0.0" max_latency="0"/>
+            <link name="Link1" source_node="NATd2Nffg1" dest_node="MAILCLIENTt0Nffg1" min_through="0.0" max_latency="0"/>
+            <link name="Link18" source_node="NATd2Nffg1" dest_node="DPIc5Nffg1" min_through="0.0" max_latency="0"/>
+            <link name="Link7" source_node="NATd2Nffg1" dest_node="WEBSERVERt1Nffg1" min_through="0.0" max_latency="0"/>
+            <link name="Link9" source_node="NATd2Nffg1" dest_node="MAILSERVERt2Nffg1" min_through="0.0" max_latency="0"/>
+            <host>H1</host>
+        </node>
+        <node name="DPIc5Nffg1" nffg_name="Nffg1" VNFT="DPIc">
+            <link name="Link15" source_node="DPIc5Nffg1" dest_node="NATd2Nffg1" min_through="0.0" max_latency="0"/>
+            <link name="Link3" source_node="DPIc5Nffg1" dest_node="MAILCLIENTt1Nffg1" min_through="0.0" max_latency="0"/>
+            <link name="Link17" source_node="DPIc5Nffg1" dest_node="MAILCLIENTt0Nffg1" min_through="0.0" max_latency="0"/>
+            <host>H4</host>
+        </node>
+        <node name="VPNa1Nffg1" nffg_name="Nffg1" VNFT="VPNa">
+            <link name="Link14" source_node="VPNa1Nffg1" dest_node="NATd0Nffg1" min_through="0.0" max_latency="0"/>
+            <host>H0</host>
+        </node>
+        <node name="MAILCLIENTt0Nffg1" nffg_name="Nffg1" VNFT="MAILCLIENTt">
+            <link name="Link0" source_node="MAILCLIENTt0Nffg1" dest_node="NATd2Nffg1" min_through="0.0" max_latency="0"/>
+            <host>H5</host>
+        </node>
+        <node name="NATd0Nffg1" nffg_name="Nffg1" VNFT="NATd">
+            <host>H5</host>
+        </node>
+        <node name="DPIc3Nffg1" nffg_name="Nffg1" VNFT="DPIc">
+            <link name="Link12" source_node="DPIc3Nffg1" dest_node="WEBSERVERt1Nffg1" min_through="0.0" max_latency="0"/>
+            <host>H2</host>
+        </node>
+        <node name="WEBSERVERt1Nffg1" nffg_name="Nffg1" VNFT="WEBSERVERt">
+            <link name="Link6" source_node="WEBSERVERt1Nffg1" dest_node="NATd2Nffg1" min_through="0.0" max_latency="0"/>
+            <host>H2</host>
+        </node>
+    </nf_fg>
+    <nf_fg name="Nffg0" deploy_time="2016-09-28T18:54:20.000+03:00">
+        <node name="WEBSERVERt2Nffg0" nffg_name="Nffg0" VNFT="WEBSERVERt">
+            <link name="Link14" source_node="WEBSERVERt2Nffg0" dest_node="DPIc1Nffg0" min_through="0.0" max_latency="0"/>
+            <host>H1</host>
+        </node>
+        <node name="MAILCLIENTt1Nffg0" nffg_name="Nffg0" VNFT="MAILCLIENTt">
+            <link name="Link2" source_node="MAILCLIENTt1Nffg0" dest_node="DPIc1Nffg0" min_through="0.0" max_latency="0"/>
+            <host>H1</host>
+        </node>
+        <node name="WEBSERVERt3Nffg0" nffg_name="Nffg0" VNFT="WEBSERVERt">
+            <link name="Link16" source_node="WEBSERVERt3Nffg0" dest_node="DPIc0Nffg0" min_through="0.0" max_latency="0"/>
+            <host>H2</host>
+        </node>
+        <node name="MAILCLIENTt2Nffg0" nffg_name="Nffg0" VNFT="MAILCLIENTt">
+            <link name="Link4" source_node="MAILCLIENTt2Nffg0" dest_node="DPIc1Nffg0" min_through="0.0" max_latency="0"/>
+            <host>H2</host>
+        </node>
+        <node name="WEBCLIENTt3Nffg0" nffg_name="Nffg0" VNFT="WEBCLIENTt">
+            <link name="Link6" source_node="WEBCLIENTt3Nffg0" dest_node="DPIc1Nffg0" min_through="0.0" max_latency="0"/>
+            <host>H3</host>
+        </node>
+        <node name="DPIc1Nffg0" nffg_name="Nffg0" VNFT="DPIc">
+            <link name="Link11" source_node="DPIc1Nffg0" dest_node="MAILSERVERt0Nffg0" min_through="0.0" max_latency="0"/>
+            <link name="Link15" source_node="DPIc1Nffg0" dest_node="WEBSERVERt2Nffg0" min_through="0.0" max_latency="0"/>
+            <link name="Link1" source_node="DPIc1Nffg0" dest_node="WEBCLIENTt0Nffg0" min_through="0.0" max_latency="0"/>
+            <link name="Link13" source_node="DPIc1Nffg0" dest_node="WEBSERVERt1Nffg0" min_through="0.0" max_latency="0"/>
+            <link name="Link3" source_node="DPIc1Nffg0" dest_node="MAILCLIENTt1Nffg0" min_through="0.0" max_latency="0"/>
+            <link name="Link5" source_node="DPIc1Nffg0" dest_node="MAILCLIENTt2Nffg0" min_through="0.0" max_latency="0"/>
+            <link name="Link7" source_node="DPIc1Nffg0" dest_node="WEBCLIENTt3Nffg0" min_through="0.0" max_latency="0"/>
+            <host>H4</host>
+        </node>
+        <node name="WEBSERVERt1Nffg0" nffg_name="Nffg0" VNFT="WEBSERVERt">
+            <link name="Link12" source_node="WEBSERVERt1Nffg0" dest_node="DPIc1Nffg0" min_through="0.0" max_latency="0"/>
+            <host>H0</host>
+        </node>
+        <node name="DPIc0Nffg0" nffg_name="Nffg0" VNFT="DPIc">
+            <link name="Link18" source_node="DPIc0Nffg0" dest_node="MAILCLIENTt2Nffg0" min_through="0.0" max_latency="0"/>
+            <link name="Link17" source_node="DPIc0Nffg0" dest_node="WEBSERVERt3Nffg0" min_through="0.0" max_latency="0"/>
+            <link name="Link9" source_node="DPIc0Nffg0" dest_node="WEBCLIENTt4Nffg0" min_through="0.0" max_latency="0"/>
+            <host>H3</host>
+        </node>
+        <node name="WEBCLIENTt4Nffg0" nffg_name="Nffg0" VNFT="WEBCLIENTt">
+            <link name="Link8" source_node="WEBCLIENTt4Nffg0" dest_node="DPIc0Nffg0" min_through="0.0" max_latency="0"/>
+            <host>H4</host>
+        </node>
+        <node name="MAILSERVERt0Nffg0" nffg_name="Nffg0" VNFT="MAILSERVERt">
+            <link name="Link10" source_node="MAILSERVERt0Nffg0" dest_node="DPIc1Nffg0" min_through="0.0" max_latency="0"/>
+            <host>H5</host>
+        </node>
+        <node name="WEBCLIENTt0Nffg0" nffg_name="Nffg0" VNFT="WEBCLIENTt">
+            <link name="Link0" source_node="WEBCLIENTt0Nffg0" dest_node="DPIc1Nffg0" min_through="0.0" max_latency="0"/>
+            <host>H0</host>
+        </node>
+    </nf_fg>
+    <in>
+        <host name="H0" max_vnf="11" memory="7400" disk_storage="17000">
+            <node>MAILCLIENTt1Nffg1</node>
+            <node>MAILCLIENTt1Nffg2</node>
+            <node>WEBSERVERt1Nffg0</node>
+            <node>VPNa1Nffg1</node>
+            <node>WEBCLIENTt0Nffg0</node>
+        </host>
+        <host name="H1" max_vnf="13" memory="7300" disk_storage="60000">
+            <node>WEBSERVERt2Nffg0</node>
+            <node>WEBSERVERt0Nffg1</node>
+            <node>MAILCLIENTt1Nffg0</node>
+            <node>NATd2Nffg1</node>
+            <node>MAILSERVERt0Nffg2</node>
+        </host>
+        <host name="H2" max_vnf="11" memory="9700" disk_storage="58000">
+            <node>WEBSERVERt3Nffg0</node>
+            <node>MAILCLIENTt2Nffg0</node>
+            <node>DPIc3Nffg1</node>
+            <node>WEBSERVERt1Nffg2</node>
+            <node>WEBSERVERt1Nffg1</node>
+        </host>
+        <host name="H3" max_vnf="14" memory="6600" disk_storage="30000">
+            <node>DPIc4Nffg1</node>
+            <node>WEBCLIENTt3Nffg0</node>
+            <node>MAILSERVERt2Nffg1</node>
+            <node>DPIc0Nffg0</node>
+            <node>NATd0Nffg2</node>
+        </host>
+        <host name="H4" max_vnf="5" memory="9100" disk_storage="90000">
+            <node>MAILSERVERt3Nffg1</node>
+            <node>DPIc5Nffg1</node>
+            <node>DPIc1Nffg0</node>
+            <node>WEBCLIENTt4Nffg0</node>
+            <node>FWb1Nffg2</node>
+        </host>
+        <host name="H5" max_vnf="19" memory="8500" disk_storage="68000">
+            <node>MAILSERVERt0Nffg0</node>
+            <node>MAILCLIENTt0Nffg1</node>
+            <node>NATd0Nffg1</node>
+            <node>WEBCLIENTt0Nffg2</node>
+        </host>
+        <connection host1="H0" host2="H0" avg_through="42.78" avg_latency="0"/>
+        <connection host1="H0" host2="H1" avg_through="82.05" avg_latency="42"/>
+        <connection host1="H0" host2="H2" avg_through="66.07" avg_latency="63"/>
+        <connection host1="H0" host2="H3" avg_through="12.13" avg_latency="89"/>
+        <connection host1="H0" host2="H4" avg_through="16.65" avg_latency="53"/>
+        <connection host1="H0" host2="H5" avg_through="6.43" avg_latency="71"/>
+        <connection host1="H1" host2="H0" avg_through="18.01" avg_latency="42"/>
+        <connection host1="H1" host2="H1" avg_through="14.26" avg_latency="0"/>
+        <connection host1="H1" host2="H2" avg_through="2.77" avg_latency="22"/>
+        <connection host1="H1" host2="H3" avg_through="86.93" avg_latency="50"/>
+        <connection host1="H1" host2="H4" avg_through="56.55" avg_latency="26"/>
+        <connection host1="H1" host2="H5" avg_through="50.63" avg_latency="76"/>
+        <connection host1="H2" host2="H0" avg_through="29.0" avg_latency="63"/>
+        <connection host1="H2" host2="H1" avg_through="1.98" avg_latency="22"/>
+        <connection host1="H2" host2="H2" avg_through="17.7" avg_latency="0"/>
+        <connection host1="H2" host2="H3" avg_through="10.73" avg_latency="30"/>
+        <connection host1="H2" host2="H4" avg_through="25.85" avg_latency="27"/>
+        <connection host1="H2" host2="H5" avg_through="60.15" avg_latency="83"/>
+        <connection host1="H3" host2="H0" avg_through="48.48" avg_latency="89"/>
+        <connection host1="H3" host2="H1" avg_through="94.91" avg_latency="50"/>
+        <connection host1="H3" host2="H2" avg_through="72.05" avg_latency="30"/>
+        <connection host1="H3" host2="H3" avg_through="56.41" avg_latency="0"/>
+        <connection host1="H3" host2="H4" avg_through="23.52" avg_latency="40"/>
+        <connection host1="H3" host2="H5" avg_through="26.1" avg_latency="87"/>
+        <connection host1="H4" host2="H0" avg_through="41.39" avg_latency="53"/>
+        <connection host1="H4" host2="H1" avg_through="88.64" avg_latency="26"/>
+        <connection host1="H4" host2="H2" avg_through="76.2" avg_latency="27"/>
+        <connection host1="H4" host2="H3" avg_through="59.9" avg_latency="40"/>
+        <connection host1="H4" host2="H4" avg_through="64.71" avg_latency="0"/>
+        <connection host1="H4" host2="H5" avg_through="78.33" avg_latency="57"/>
+        <connection host1="H5" host2="H0" avg_through="9.44" avg_latency="71"/>
+        <connection host1="H5" host2="H1" avg_through="83.27" avg_latency="76"/>
+        <connection host1="H5" host2="H2" avg_through="58.46" avg_latency="83"/>
+        <connection host1="H5" host2="H3" avg_through="32.41" avg_latency="87"/>
+        <connection host1="H5" host2="H4" avg_through="99.09" avg_latency="57"/>
+        <connection host1="H5" host2="H5" avg_through="90.38" avg_latency="0"/>
+    </in>
+</dp2_nfv>
